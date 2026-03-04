@@ -1,0 +1,197 @@
+prompt,task_type,placeholder,complexity
+"Hi, how are you?",1,,0
+"What's your favorite animal?",1,,0
+"Tell me a fun fact about turtles.",1,,0
+"Do you think robots dream?",1,,0
+"Explain what a lunar eclipse is.",2,,0
+"Why do leaves change color in autumn?",2,,0
+"Describe how a combustion engine works.",2,,0
+"Teach me the basics of quantum entanglement.",2,,0
+"Rewrite the following sentence to sound more professional: 'I’ll get it done soon.'",3,,0
+"Rewrite this paragraph so it flows better: 'The data was collected quickly and the results were surprising.'",3,,0
+"Improve the clarity of this draft email asking for an extension.",3,,0
+"Summarize the following concept in simpler words: Bayesian inference.",3,,0
+"Write a short poem about a lonely lighthouse.",6,,0
+"Invent a magical creature and describe its abilities.",6,,0
+"Create a sci-fi story prompt involving ancient satellites.",6,,0
+"Write the opening paragraph of a mystery novel set in a library.",6,,0
+"Help me plan a weekly study schedule for finals.",5,,0
+"Create a bullet-point productivity plan for organizing a messy apartment.",5,,0
+"Outline steps for planning a small community event.",5,,0
+"Help me structure a 30-minute presentation on renewable energy.",5,,0
+"Explain how to fix a Python list index error.",4,,0
+"Write a simple Python function to reverse a string.",4,,0
+"Generate a bash script that backs up a directory to a ZIP file.",4,,0
+"Explain why my Java program is throwing a NullPointerException.",4,,0
+"Tell me a joke about penguins.",1,,0
+"What's the best way to stay motivated on rainy days?",1,,0
+"Ask me a deep philosophical question.",1,,0
+"Give me three conversation starters for meeting new people.",1,,0
+"Explain the water cycle like I'm five.",2,,0
+"Explain how neural networks learn.",2,,0
+"Describe the carbon cycle in detail.",2,,0
+"Teach me how black holes form.",2,,0
+"Rewrite this to sound more concise: 'At this point in time, I am unable to proceed.'",3,,0
+"Fix grammar in this sentence: 'The results was inconsistent.'",3,,0
+"Rewrite the following email to sound more confident.",3,,0
+"Summarize the plot of Romeo and Juliet in two sentences.",3,,0
+"Write a short fairy-tale scene involving a stubborn dragon.",6,,0
+"Generate a creative writing prompt involving a forgotten memory.",6,,0
+"Make up a story about a time-traveling botanist.",6,,0
+"Create a dramatic opening to a space opera.",6,,0
+"Help me plan tomorrow's tasks efficiently.",5,,0
+"Break down how to create a personal budget.",5,,0
+"Help me outline a morning routine that boosts productivity.",5,,0
+"Make a checklist for preparing a long road trip.",5,,0
+"Write a Python function to merge two dictionaries.",4,,0
+"Explain how to debug segmentation faults.",4,,0
+"Create an example SQL query that joins three tables.",4,,0
+"Write pseudocode for binary search.",4,,0
+"Say something encouraging.",1,,0
+"Tell me a weird but harmless conspiracy theory.",1,,0
+"Give me advice for unwinding after a stressful day.",1,,0
+"Ask me three introspective questions.",1,,0
+"Explain why volcanoes erupt.",2,,0
+"Describe how vaccines work.",2,,0
+"Teach me why tidal forces occur.",2,,0
+"Explain the concept of reinforcement learning.",2,,0
+"Polish the tone of this text: 'Hey, can you check my draft?'",3,,0
+"Rewrite this for academic clarity: 'Big models need lots of energy.'",3,,0
+"Condense the following into one sentence: 'The process was long and exhausting but worth it.'",3,,0
+"Edit this paragraph to make it more engaging.",3,,0
+"Write a fantasy prompt involving a magical map.",6,,0
+"Describe a whimsical landscape filled with floating islands.",6,,0
+"Create a writing prompt about rediscovering forgotten technology.",6,,0
+"Write a dark, atmospheric setting for a horror short story.",6,,0
+"Help me plan a month-long workout schedule.",5,,0
+"Make a meal-prep plan for a busy college student.",5,,0
+"Outline a personal improvement plan for learning math faster.",5,,0
+"Make a prioritized task list for organizing research notes.",5,,0
+"Write a Java method that checks if a number is prime.",4,,0
+"Explain how hash maps work internally.",4,,0
+"Generate boilerplate code for a Flask API endpoint.",4,,0
+"Write a C program that prints the Fibonacci sequence.",4,,0
+"Tell me a silly fun fact.",1,,0
+"What's a good question to ask at a job interview?",1,,0
+"Give me three fun things to do alone on a weekend.",1,,0
+"Suggest something spontaneous I could try today.",1,,0
+"Explain the phases of the Moon.",2,,0
+"Describe in detail how glaciers carve landscapes.",2,,0
+"Teach me how lasers work.",2,,0
+"Explain multithreading to a beginner.",2,,0
+"Rewrite this sentence to sound cheerful: 'The meeting is mandatory.'",3,,0
+"Make this text more formal: 'We gotta fix this soon.'",3,,0
+"Improve clarity of this academic statement.",3,,0
+"Summarize Newton's laws of motion.",3,,0
+"Write a creative prompt involving forbidden knowledge.",6,,0
+"Invent a mythical city and describe its customs.",6,,0
+"Create a surreal dream sequence involving clocks.",6,,0
+"Write an elaborate opening to a high-fantasy battle scene.",6,,0
+"Help me organize my digital files.",5,,0
+"Plan a two-week self-study curriculum for statistics.",5,,0
+"Make a decision-making checklist for big life choices.",5,,0
+"Create a simple weekly cleaning schedule.",5,,0
+"Write a Python snippet that sorts a list of tuples.",4,,0
+"Explain memory allocation in C at a high level.",4,,0
+"Create a command-line example using argparse in Python.",4,,0
+"Write pseudocode for quicksort.",4,,0
+"Hi!",1,,0
+"What's your favorite color?",1,,0
+"Tell me a fun fact about cats.",1,,0
+"How's your day going?",1,,0
+"Do you like pizza?",1,,0
+"Explain how rainbows form.",2,,1
+"Why does the Moon have phases?",2,,1
+"Explain recursion in simple terms.",2,,1
+"How do airplanes stay in the air?",2,,1
+"Teach me what inertia means.",2,,1
+"Rewrite this sentence to sound more formal: 'I forgot my homework again.'",3,,1
+"Edit this paragraph for clarity: 'The dog, it ran fast and quickly to the house.'",3,,1
+"Rewrite this email more politely: 'Send me the files today.'",3,,1
+"Rewrite this text in a humorous tone: 'I broke my coffee mug.'",3,,1
+"Summarize the following: 'Photosynthesis is the process by which plants convert light into energy...'",3,,1
+"Write a SQL query to select all rows where age > 30.",4,,1
+"Explain this Python error: IndexError: list index out of range.",4,,1
+"Write a function in JavaScript to reverse a string.",4,,1
+"Debug this code snippet: 'for(i=0;i<10;i--){console.log(i)}'",4,,1
+"Convert this Python loop into a list comprehension.",4,,1
+"Plan a 3-day study schedule for exam preparation.",5,,1
+"Help me organize my weekly tasks.",5,,1
+"Create a workout plan for a beginner.",5,,1
+"Help me outline a short presentation on climate change.",5,,1
+"Generate a checklist for moving to a new apartment.",5,,1
+"Invent a superhero with completely useless powers.",6,,0
+"Write a short story about a robot learning to dance.",6,,1
+"Give me an imaginative description of a floating city.",6,,1
+"Describe a magical creature no one has ever heard of.",6,,1
+"Create a creative writing prompt involving time travel.",6,,1
+"Explain the difference between RAM and storage.",2,,1
+"Teach me how the stock market works at a basic level.",2,,1
+"Explain how machine learning models learn patterns.",2,,1
+"Describe the water cycle.",2,,1
+"Explain why tides occur on Earth.",2,,1
+"Rewrite this sentence to sound more confident: 'I think I might be able to do it.'",3,,1
+"Summarize this concept: 'Evolution by natural selection.'",3,,1
+"Rewrite this paragraph to sound more dramatic: 'The meeting started late.'",3,,1
+"Improve this sentence: 'I saw a bird.', make it more descriptive.",3,,1
+"Proofread the following: 'The book were on the table.'",3,,0
+"Write pseudocode for a bubble sort algorithm.",4,,1
+"Explain how pointers work in C.",4,,2
+"Write a Python class for a basic calculator.",4,,1
+"Convert this for-loop into a while-loop in Java.",4,,1
+"Explain what Big-O notation means.",4,,2
+"Help me outline a business plan for a small café.",5,,2
+"Create a daily productivity routine for remote work.",5,,1
+"Generate a structured outline for writing a research paper.",5,,2
+"Help me plan a budgeting strategy for monthly expenses.",5,,1
+"Organize a step-by-step workflow for cleaning a house efficiently.",5,,1
+"Write an opening line for a fantasy novel.",6,,1
+"Describe a dystopian world where gravity changes daily.",6,,1
+"Create a writing prompt involving a time loop.",6,,1
+"Write a poem about a lonely lighthouse.",6,,1
+"Invent a creature that lives in 4D space.",6,,2
+"Explain photosynthesis like I'm five.",2,,1
+"Why do volcanoes erupt?",2,,1
+"How does a compass work?",2,,1
+"Explain prime numbers to a beginner.",2,,0
+"What are the states of matter?",2,,0
+"Rewrite this paragraph to sound more academic: 'Dogs are really good pets.'",3,,1
+"Fix the grammar: 'She don't like apples.'",3,,0
+"Rewrite this in a sarcastic tone: 'Great, another meeting.'",3,,1
+"Condense this sentence: 'He walked slowly and lazily down the long hallway.'",3,,0
+"Summarize the plot of a generic fairy tale.",3,,1
+"Write a bash command to list all files in a directory.",4,,0
+"Explain why binary numbers are used in computers.",4,,1
+"Write Python code that removes duplicates from a list.",4,,1
+"Explain how neural networks approximate functions.",4,,2
+"Debug this snippet: 'if (x = 5) print(x);'",4,,1
+"Make a schedule for someone who works evenings and studies in the morning.",5,,1
+"Help me design a morning routine for productivity.",5,,1
+"Create a weekly meal-prep plan.",5,,1
+"Organize a packing list for a weekend hiking trip.",5,,1
+"Outline steps for starting a YouTube channel.",5,,1
+"Give me a creative writing prompt about forgotten memories.",6,,1
+"Describe an alien civilization powered by sound waves.",6,,2
+"Create a short scene involving a talking mirror.",6,,1
+"Write a bedtime story about a sleepy dragon.",6,,1
+"Invent a magical artifact with three unusual abilities.",6,,1
+"What's 2+2?",1,,0
+"Where should I go on vacation?",1,,0
+"Tell me a joke about computers.",1,,0
+"How do you feel today?",1,,0
+"What’s your favorite movie?",1,,0
+"Explain how gravity works using simple language.",2,,1
+"Teach me why the sky appears blue.",2,,1
+"Explain how sound waves travel.",2,,1
+"Describe how bridges stay standing.",2,,1
+"Explain the basics of electricity.",2,,1
+"Rewrite this sentence in a cheerful tone: 'The report is due tomorrow.'",3,,1
+"Paraphrase: 'Artificial intelligence is transforming society.'",3,,1
+"Proofread: 'Their going too the store.'",3,,0
+"Condense this: 'Many people believe that learning languages is difficult because...'",3,,1
+"Rewrite this paragraph to be more concise.",3,,1
+"Write a Python function that checks if a number is prime.",4,,1
+"Explain how hash maps work.",4,,2
+"Create a basic HTML webpage structure.",4,,0
+"Write a regex that matches email addresses.",4,,1
+"Explain gradient descent in detail.",4,,2
