@@ -4,8 +4,8 @@ Build unified prompt dataset for energy experiments.
 Sources:
 - LLM-generated prompts from a local CSV
 - HuggingFace datasets:
-    - deepmind/code_contests
-    - ryanmarten/OpenThoughts-1k-sample
+    - HuggingFaceH4/MATH-500
+    - cais/mmlu
     - openai/openai_humaneval
     - crownelius/Opus-4.6-Reasoning-3300x
     - google/simpleqa-verified
