@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 """
-Create a Bar Graph showing the distribution of the six task types in the dataset
+Create a Bar Graph showing the distribution of the six task types in the dataset.
 """
 
 df = pd.read_csv("/Users/abigailpitcairn/Desktop/LLMEnergyConsumption/Data/dataset.csv")
@@ -27,5 +27,5 @@ legend_elements = [
 ]
 
 plt.legend(handles=legend_elements, title="Task Type")
-
+plt.savefig("/Users/abigailpitcairn/Desktop/LLMEnergyConsumption/DataVisualizer/graphs/bargraph.pdf")
 plt.show()
