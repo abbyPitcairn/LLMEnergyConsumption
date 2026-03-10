@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 """
 Scatterplot of complexity versus Prompt Length
-As we'd expect, complexity has a positive correlation with length
 """
 
 df = pd.read_csv("/Users/abigailpitcairn/Desktop/LLMEnergyConsumption/Data/dataset.csv")
