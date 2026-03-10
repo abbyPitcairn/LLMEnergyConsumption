@@ -34,11 +34,15 @@ import re
 LLM_PROMPTS_CSV: Optional[str] = "Data/AI_generated_prompts.csv"
 
 # Where to save the final combined dataset
-OUTPUT_CSV: str = "Data/LLM_energy_dataset.csv"
+OUTPUT_CSV: str = "Data/dataset.csv"
 
 # Random seed for reproducibility
 RANDOM_SEED: int = 42
 SAMPLES_PER_DATASET: int = 100
+
+# The maximum length a prompt can be in the final dataset
+# (longer candidate prompts are skipped)
+MAX_PROMPT_WORDS = 250
 
 # Task type legend:
 # 1 = Casual / small talk
@@ -214,13 +218,18 @@ def load_hf_prompts() -> pd.DataFrame:
             prompt_text = extract_prompt_from_example(
                 ex, cfg["prompt_fields"]
             )
-
+            # Check that some text was extracted; if none was, skip
             if not prompt_text:
+                continue
+            word_count = compute_word_count(prompt_text)
+            # Skip prompts that exceed max length
+            if word_count > MAX_PROMPT_WORDS:
                 continue
 
             records.append(
                 {
                     "prompt": str(prompt_text).strip(),
+                    "prompt_length": word_count,
                     "task_type": cfg["task_type"],
                     "complexity": cfg["complexity"],
                     "output_length": None,
@@ -251,6 +260,8 @@ def load_llm_prompts(csv_path: str) -> pd.DataFrame:
         raise ValueError("LLM prompts CSV must contain a 'prompt' column.")
 
     # Standardize/ensure columns
+    if "prompt_length" not in df.columns:
+        df["prompt_length"] = pd.NA
     if "task_type" not in df.columns:
         df["task_type"] = pd.NA
     if "complexity" not in df.columns:
@@ -261,7 +272,9 @@ def load_llm_prompts(csv_path: str) -> pd.DataFrame:
     df["origin"] = "ChatGPT"
 
     # Keep only the columns we care about at this stage
-    df = df[["prompt", "task_type", "complexity", "output_length", "origin"]]
+    df = df[["prompt", "prompt_length", "task_type", "complexity", "output_length", "origin"]]
+    # Compute prompt length [saves us from having to recompute prompt length later]
+    df["prompt_length"] = df["prompt"].apply(compute_word_count)
 
     print(f"  -> loaded {len(df)} ChatGPT prompts.")
     return df
@@ -287,7 +300,7 @@ def main():
     combined["prompt"] = combined["prompt"].apply(clean_prompt_text)
 
     # 4. Compute prompt_length (word count)
-    combined["prompt_length"] = combined["prompt"].apply(compute_word_count)
+
 
     # 5. Compute length_bucket so 25% of samples fall into each bucket
     combined["length_bucket"] = assign_length_buckets(combined["prompt_length"])
