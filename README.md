@@ -30,6 +30,21 @@ pip install -r requirements.txt
 python DatasetGenerator.py
 ```
 
+To run any of the data visualization scripts, make sure you have already generated the dataset and that the dataset.csv file is in the correct location and navigate into the DataVisualization directory. 
+
+```
+cd LLMEnergyConservation
+cd DataVisualizer
+```
+
+Then, simply run the script for whichever of the six graphs you would like to generate:
+
+```
+python PromptWordCloud.py
+```
+
+Graphs will output to a new directory titled `graphs` within the DataVisualization directory.
+
 ### Dataset
 
 In the dataset file, there are six columns: 
@@ -55,4 +70,5 @@ In the dataset file, there are six columns:
 ### Release History
 
 * **March 4, 2026:** Initial Release of Dataset Generator
+* **March 10, 2026:** Added Data Visualization Scripts for Graph Generation
 * **May 5, 2026:** Projected Final Release Date
