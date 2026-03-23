@@ -118,15 +118,14 @@ def clean_prompt_text(text: str) -> str:
     if not isinstance(text, str):
         return ""
 
-    # 1. Replace all whitespace except space with space
-    # \s includes space, so we handle explicitly:
+    # Replace all whitespace except space
     text = re.sub(r"[^\S ]+", " ", text)
 
-    # 2. Remove characters that are NOT:
-    #    letters, numbers, space, or standard punctuation
+    # Remove characters that are NOT:
+    # letters, numbers, space, or standard punctuation
     text = re.sub(r"[^a-zA-Z0-9 .,!?;:'\"()\-\[\]{}<>/\\@#$%^&*_+=|`~]", "", text)
 
-    # 3. Collapse multiple spaces
+    # Collapse multiple spaces to one
     text = re.sub(r" +", " ", text)
 
     return text.strip()
@@ -200,10 +199,7 @@ def load_hf_prompts() -> pd.DataFrame:
             print(f"Failed to load {cfg['name']}: {e}")
             continue
 
-        # Deterministic shuffle
         ds = ds.shuffle(seed=RANDOM_SEED)
-
-        # Determine sample size safely
         sample_size = min(SAMPLES_PER_DATASET, len(ds))
 
         if sample_size < SAMPLES_PER_DATASET:
@@ -222,8 +218,8 @@ def load_hf_prompts() -> pd.DataFrame:
             if not prompt_text:
                 continue
             word_count = compute_word_count(prompt_text)
-            # Skip prompts that exceed max length
-            if word_count > MAX_PROMPT_WORDS:
+            # Skip prompts that exceed max length or have no words
+            if word_count > MAX_PROMPT_WORDS or word_count == 0:
                 continue
 
             records.append(
@@ -232,7 +228,6 @@ def load_hf_prompts() -> pd.DataFrame:
                     "prompt_length": word_count,
                     "task_type": cfg["task_type"],
                     "complexity": cfg["complexity"],
-                    "output_length": None,
                     "origin": cfg["origin"]
                 }
             )
@@ -244,13 +239,12 @@ def load_hf_prompts() -> pd.DataFrame:
 
 def load_llm_prompts(csv_path: str) -> pd.DataFrame:
     """
-    Load your manually annotated ChatGPT prompts from CSV.
+    Load ChatGPT prompts from CSV.
 
     Expected columns:
       - prompt (str)
       - task_type (int in {1..6})
       - complexity (int in {0,1,2})
-      - output_length (empty for now)
     """
     print(f"\nLoading ChatGPT prompts from: {csv_path}")
     df = pd.read_csv(csv_path)
@@ -259,24 +253,21 @@ def load_llm_prompts(csv_path: str) -> pd.DataFrame:
     if "prompt" not in df.columns:
         raise ValueError("LLM prompts CSV must contain a 'prompt' column.")
 
-    # Standardize/ensure columns
+    # Standardize columns
     if "prompt_length" not in df.columns:
         df["prompt_length"] = pd.NA
     if "task_type" not in df.columns:
         df["task_type"] = pd.NA
     if "complexity" not in df.columns:
         df["complexity"] = pd.NA
-    if "output_length" not in df.columns:
-        df["output_length"] = pd.NA
 
     df["origin"] = "ChatGPT"
 
-    # Keep only the columns we care about at this stage
-    df = df[["prompt", "prompt_length", "task_type", "complexity", "output_length", "origin"]]
+    df = df[["prompt", "prompt_length", "task_type", "complexity", "origin"]]
     # Compute prompt length [saves us from having to recompute prompt length later]
     df["prompt_length"] = df["prompt"].apply(compute_word_count)
 
-    print(f"  -> loaded {len(df)} ChatGPT prompts.")
+    print(f"  -> Loaded {len(df)} ChatGPT prompts.")
     return df
 
 
@@ -299,9 +290,6 @@ def main():
     # 3. Clean all prompts
     combined["prompt"] = combined["prompt"].apply(clean_prompt_text)
 
-    # 4. Compute prompt_length (word count)
-
-
     # 5. Compute length_bucket so 25% of samples fall into each bucket
     combined["length_bucket"] = assign_length_buckets(combined["prompt_length"])
 
@@ -313,7 +301,6 @@ def main():
             "length_bucket",
             "task_type",
             "complexity",
-            "output_length",
             "origin"
         ]
     ]
