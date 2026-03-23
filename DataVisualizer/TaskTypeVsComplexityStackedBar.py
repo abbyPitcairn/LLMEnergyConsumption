@@ -3,31 +3,26 @@ import matplotlib.pyplot as plt
 """
 Create a stacked bar graph showing the distribution of complexity levels for each task type.
 """
+def task_type_vs_complexity_stacked_bar(graph_dir: str, dataset_path: str):
+    df = pd.read_csv(dataset_path)
 
-df = pd.read_csv("/Users/abigailpitcairn/Desktop/LLMEnergyConsumption/Data/dataset.csv")
+    counts = pd.crosstab(df["task_type"], df["complexity"])
+    counts.plot(
+        kind="bar",
+        stacked=True,
+        figsize=(8,5)
+    )
 
-# Create a table of counts
-counts = pd.crosstab(df["task_type"], df["complexity"])
+    plt.xlabel("Task Type")
+    plt.ylabel("Number of Prompts")
 
-# Plot stacked bar chart
-counts.plot(
-    kind="bar",
-    stacked=True,
-    figsize=(8,5)
-)
+    task_names = [
+        "Casual", "Explanation", "Writing",
+        "Coding", "Productivity", "Creativity"
+    ]
 
-plt.xlabel("Task Type")
-plt.ylabel("Number of Prompts")
-#plt.title("Task Type vs Task Complexity")
+    plt.xticks(range(len(task_names)), task_names, rotation=30)
+    plt.legend(title="Complexity")
 
-task_names = [
-    "Casual", "Explanation", "Writing",
-    "Coding", "Productivity", "Creativity"
-]
-
-plt.xticks(range(len(task_names)), task_names, rotation=30)
-plt.legend(title="Complexity")
-
-plt.tight_layout()
-plt.savefig("/Users/abigailpitcairn/Desktop/LLMEnergyConsumption/DataVisualizer/graphs/stackedbar.pdf")
-plt.show()
+    plt.tight_layout()
+    plt.savefig(graph_dir + "/stackedbar.pdf")
