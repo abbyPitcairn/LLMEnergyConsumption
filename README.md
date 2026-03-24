@@ -15,18 +15,22 @@ The dataset is comprised of 500 AI-generated prompts and 500 prompts pulled from
 * `crownelius/Opus-4.6-Reasoning-3300x`
 * `google/simpleqa-verified`
 
-The AI-generated prompts come from ChatGPT's online API and must be generated, saved and uploaded separately as a .csv file at `Data/. `DatasetGenerator.py` will create the complete dataset from this saved .csv and using the HuggingFace API. 
+The AI-generated prompts come from ChatGPT's online API and must be generated, saved and uploaded separately as a .csv file at `Data/AI_generated_prompts.csv`. 
+
+`DatasetGenerator.py` will create the complete dataset from this saved .csv and using the HuggingFace API. 
 
 ### Execution
 
 To run the program:
 
-* Download project files. 
-* Run the requirements installation and Python commands below. 
+* Download project files.
+* Generate and save a HuggingFace.com access token.
+* Run the Python commands below, and enter HF token when prompted.
 * Now your dataset is generated at the output csv file.
   
 ```
 pip install -r requirements.txt
+huggingface-cli login
 python DatasetGenerator.py
 ```
 
@@ -36,24 +40,28 @@ To generate the six data visualization plots, run the command:
 python DataVisualization/GenerateAll.py
 ```
 
-Graphs will save to `DataVisualization/Graphs` as .pdf.
+Graphs will save to `DataVisualization/Graphs` as .pdf. 
+
+**Note:** it is not necessary to generate the dataset prior to generating the plots, because running the `GenerateAll.py` script will re-generate the dataset. 
 
 ### Dataset
 
-In the dataset file, there are six columns: 
+In the dataset file, there are seven columns: 
+* **ID**: identifying number for the prompt, assigned based on row number. 
 * **Prompt**: the prompt text that will be given to the LLM while we measure energy usage.
 * **Prompt Length**: the number of words/tokens in the prompt.
-* **Task Type**: based on a key with 7 different task types labeled 0-6; includes task categories such as small talk, coding, creativity, etc.
-* **Complexity**: a subjective annotation by the author to sort prompts by complexity of the task.
+* **Length Bucket**: the prompt is sorted into one of four buckets based on its length relative to the rest of the dataset. 
+* **Task Type**: based on a key with 6 different task types labeled 1-6: Casual, Explanation, Writing, Coding, Productivity, Creative.
+* **Complexity**: an annotation by the author to sort prompts by complexity of the task: 0 - low complexity, 1 - medium, 2 - high.
 * **Origin**: the origin of the prompt; either ChatGPT or the name of the HuggingFace dataset.
 
-#### Example of Data Output:
+#### Example Data:
 
 | Prompt | Prompt Length | Task Type | Complexity | Output Length | Origin |
 |------|------|------|------|------|------|
-| "At 50 miles per hour, how far would a car travel in $2\frac{3}{4}$ hours? Express your answer as a mixed number." | 21 | 2 | 4 | 2 | x | MATH-500 |
-| Who was known for playing the trombone for The Jazzmen at the time of Kenny Ball's death? | 17 | 1 | 1 |0 | x | SimpleQA |
-| Where should I go on vacation? | 6 | 0 | 1 |0 | x | ChatGPT |
+| "At 50 miles per hour, how far would a car travel in $2\frac{3}{4}$ hours? Express your answer as a mixed number." | 21 | 2 | 4 | 2 | MATH-500 |
+| Who was known for playing the trombone for The Jazzmen at the time of Kenny Ball's death? | 17 | 1 | 1 |0 | SimpleQA |
+| Where should I go on vacation? | 6 | 0 | 1 |0 | ChatGPT |
 
 ### Experiment
 
