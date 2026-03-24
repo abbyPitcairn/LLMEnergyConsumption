@@ -43,12 +43,12 @@ SAMPLES_PER_DATASET: int = 100
 MAX_PROMPT_WORDS = 250
 
 # Task type legend:
-# 1 = Casual / small talk
-# 2 = Explanation / learning
-# 3 = Writing / rewriting
-# 4 = Coding / technical help
-# 5 = Productivity / planning / structured
-# 6 = Creative / storytelling
+# 1 = Casual
+# 2 = Explanation
+# 3 = Writing
+# 4 = Coding
+# 5 = Productivity
+# 6 = Creative
 
 # HuggingFace dataset configs:
 HF_DATASETS = [
