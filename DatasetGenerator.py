@@ -287,15 +287,19 @@ def main():
         combined = None
         print("Could not find AI-generated prompts csv file.")
 
-    # 3. Clean all prompts
+    # Add unique ID to each prompt
+    combined["id"] = combined.index
+
+    # Clean all prompts
     combined["prompt"] = combined["prompt"].apply(clean_prompt_text)
 
-    # 5. Compute length_bucket so 25% of samples fall into each bucket
+    # Compute length_bucket so 25% of samples fall into each bucket
     combined["length_bucket"] = assign_length_buckets(combined["prompt_length"])
 
-    # 6. Confirm correct ordering of columns for consistency
+    # Confirm correct ordering of columns for consistency
     combined = combined[
         [
+            "id",
             "prompt",
             "prompt_length",
             "length_bucket",
@@ -305,7 +309,7 @@ def main():
         ]
     ]
 
-    # 7. Save to CSV
+    # Save dataset to CSV
     combined.to_csv(OUTPUT_CSV, index=False)
     print(f"\nSaved combined dataset with {len(combined)} rows to: {OUTPUT_CSV}")
 
