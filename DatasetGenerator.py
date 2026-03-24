@@ -24,9 +24,7 @@ import pandas as pd
 from datasets import load_dataset
 import re
 
-# =========================
-# CONFIG
-# =========================
+# Config
 
 # Path to generated prompts csv file.
 # Set to None if you want to skip this for now.
@@ -100,9 +98,7 @@ HF_DATASETS = [
 ]
 
 
-# =========================
-# HELPER METHODS
-# =========================
+# Helper Methods
 
 def clean_prompt_text(text: str) -> str:
     """
@@ -269,15 +265,13 @@ def load_llm_prompts(csv_path: str) -> pd.DataFrame:
     return df
 
 
-# =========================
-# MAIN PIPELINE
-# =========================
+# Main Pipeline
 
 def main():
-    # 1. Load HF dataset prompts
+    # Load HF dataset prompts
     hf_df = load_hf_prompts()
 
-    # 2. Load ChatGPT prompts
+    # Load ChatGPT prompts
     if LLM_PROMPTS_CSV is not None:
         llm_df = load_llm_prompts(LLM_PROMPTS_CSV)
         combined = pd.concat([hf_df, llm_df], ignore_index=True)
