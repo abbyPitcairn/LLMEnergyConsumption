@@ -76,7 +76,12 @@ class PowerMonitor:
 
 
 def run_prompts(model_name: str, output_path: str):
+    """
+    Run each prompt in the dataset through the model.
+    Results for each prompt are saved to a CSV file at the output path.
+    """
     print(f"Loading model: {model_name}")
+
     tokenizer = AutoTokenizer.from_pretrained(model_name, token=True)
 
     model = AutoModelForCausalLM.from_pretrained(
@@ -101,6 +106,7 @@ def run_prompts(model_name: str, output_path: str):
         monitor.start()
         start_time = time.time()
 
+        # Generate model response
         with torch.no_grad():
             outputs = model.generate(
                 **inputs,
@@ -110,7 +116,7 @@ def run_prompts(model_name: str, output_path: str):
         end_time = time.time()
         monitor.stop()
 
-        # Metrics
+        # Compute metrics:
         response_time = end_time - start_time
         output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
         num_tokens = len(outputs[0]) - inputs["input_ids"].shape[1]
@@ -122,7 +128,7 @@ def run_prompts(model_name: str, output_path: str):
             "output": output_text,
             "num_tokens": num_tokens,
             "avg_watts": avg_power,
-            "response_time_sec": response_time,
+            "response_sec": response_time,
             "energy_wh": energy_wh
         })
 
