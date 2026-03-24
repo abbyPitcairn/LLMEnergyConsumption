@@ -5,19 +5,37 @@ import threading
 import re
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
+from huggingface_hub import login
 
 # Config
 DATASET_PATH = "Data/dataset.csv"
-MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"  # change this per run
-OUTPUT_PATH = "results.csv"
-MAX_NEW_TOKENS = 100
+MODEL_NAMES = ["Qwen/Qwen2.5-7B-Instruct", "openai-community/gpt2", "meta-llama/Llama-3.1-8B-Instruct"]
+OUTPUT_PATH = "results"
+MAX_NEW_TOKENS = 250
+
+
+def experiment(models: list, token: str):
+    """
+    Run the experiment:
+        - 10 times per model
+        - For all models in input list of HuggingFace models
+    models: list of strings of LLM names on HF
+    token: string, HF token
+    """
+    login(token=token)
+    for model in models:
+        for i in range(0,10):
+            output_path = OUTPUT_PATH + "/" + str(model) + "/" + str(i) + ".csv"
+            run_prompts(model, output_path)
+
 
 # Power monitoring function
 class PowerMonitor:
     """
-
+    Monitor CPU power usage during model response generation
     """
     def __init__(self):
+        self.thread = None
         self.running = False
         self.samples = []
 
@@ -34,7 +52,7 @@ class PowerMonitor:
             if not line:
                 continue
 
-            # Extract power (look for CPU Power)
+            # Extract power (CPU Power)
             match = re.search(r"CPU Power: (\d+\.?\d*) W", line)
             if match:
                 power = float(match.group(1))
@@ -56,68 +74,60 @@ class PowerMonitor:
             return 0
         return sum(self.samples) / len(self.samples)
 
-# Load model
-print(f"Loading model: {MODEL_NAME}")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_NAME,
-    torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-    device_map="auto"
-)
+def run_prompts(model_name: str, output_path: str):
+    print(f"Loading model: {model_name}")
+    tokenizer = AutoTokenizer.from_pretrained(model_name, token=True)
 
-# Load dataset
-df = pd.read_csv(DATASET_PATH)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+        device_map="auto"
+    )
 
-results = []
+    # Load dataset
+    df = pd.read_csv(DATASET_PATH)
+    results = []
 
-# Run experiment
-for _, row in df.iterrows():
-    prompt_id = row["id"]
-    prompt = row["prompt"]
+    # Run experiment
+    for _, row in df.iterrows():
+        prompt_id = row["id"]
+        prompt = row["prompt"]
 
-    print(f"Running prompt {prompt_id}...")
+        inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+        # Start monitoring
+        monitor = PowerMonitor()
+        monitor.start()
+        start_time = time.time()
 
-    # Start monitoring
-    monitor = PowerMonitor()
-    monitor.start()
+        with torch.no_grad():
+            outputs = model.generate(
+                **inputs,
+                max_new_tokens=MAX_NEW_TOKENS
+            )
 
-    start_time = time.time()
+        end_time = time.time()
+        monitor.stop()
 
-    with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=MAX_NEW_TOKENS
-        )
+        # Metrics
+        response_time = end_time - start_time
+        output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        num_tokens = len(outputs[0]) - inputs["input_ids"].shape[1]
+        avg_power = monitor.get_average_power()
+        energy_wh = avg_power / (response_time / 3600) # Energy = Power (W) / Time (hours)
 
-    end_time = time.time()
-    monitor.stop()
+        results.append({
+            "id": prompt_id,
+            "output": output_text,
+            "num_tokens": num_tokens,
+            "avg_watts": avg_power,
+            "response_time_sec": response_time,
+            "energy_wh": energy_wh
+        })
 
-    # Metrics
-    response_time = end_time - start_time
+    # Save result
+    results_df = pd.DataFrame(results)
+    results_df.to_csv(output_path, index=False)
+    print(f"Results saved to {output_path}")
 
-    output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-    num_tokens = len(outputs[0]) - inputs["input_ids"].shape[1]
-
-    avg_power = monitor.get_average_power()
-
-    # Energy = Power (W) / Time (hours)
-    energy_wh = avg_power / (response_time / 3600)
-
-    results.append({
-        "id": prompt_id,
-        "output": output_text,
-        "num_tokens": num_tokens,
-        "avg_watts": avg_power,
-        "response_time_sec": response_time,
-        "energy_wh": energy_wh
-    })
-
-# Save result
-results_df = pd.DataFrame(results)
-results_df.to_csv(OUTPUT_PATH, index=False)
-
-print(f"Results saved to {OUTPUT_PATH}")

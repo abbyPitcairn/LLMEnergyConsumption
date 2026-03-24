@@ -16,7 +16,6 @@ Output columns:
 - length_bucket       : int  in {0,1,2,3} (quartiles by prompt_length)
 - task_type           : int  in {1..6}
 - complexity          : int  in {0,1,2}  (0=low, 1=medium, 2=high)
-- output_length       : nullable (to be filled later after experiments)
 - origin              : str  (e.g., "ChatGPT", "code_contests", ...)
 """
 
@@ -41,7 +40,6 @@ RANDOM_SEED: int = 42
 SAMPLES_PER_DATASET: int = 100
 
 # The maximum length a prompt can be in the final dataset
-# (longer candidate prompts are skipped)
 MAX_PROMPT_WORDS = 250
 
 # Task type legend:
