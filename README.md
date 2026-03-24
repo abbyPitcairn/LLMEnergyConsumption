@@ -15,7 +15,7 @@ The dataset is comprised of 500 AI-generated prompts and 500 prompts pulled from
 * `crownelius/Opus-4.6-Reasoning-3300x`
 * `google/simpleqa-verified`
 
-The AI-generated prompts come from ChatGPT's online API and must be generated, saved and uploaded separately as a .csv file. `DatasetGenerator.py` will create the complete dataset from this saved .csv and using the HuggingFace API. 
+The AI-generated prompts come from ChatGPT's online API and must be generated, saved and uploaded separately as a .csv file at `Data/. `DatasetGenerator.py` will create the complete dataset from this saved .csv and using the HuggingFace API. 
 
 ### Execution
 
@@ -30,20 +30,13 @@ pip install -r requirements.txt
 python DatasetGenerator.py
 ```
 
-To run any of the data visualization scripts, make sure you have already generated the dataset and that the dataset.csv file is in the correct location and navigate into the DataVisualization directory. 
+To generate the six data visualization plots, run the command:
 
 ```
-cd LLMEnergyConservation
-cd DataVisualizer
+python DataVisualization/GenerateAll.py
 ```
 
-Then, simply run the script for whichever of the six graphs you would like to generate:
-
-```
-python PromptWordCloud.py
-```
-
-Graphs will output to a new directory titled `graphs` within the DataVisualization directory.
+Graphs will save to `DataVisualization/Graphs` as .pdf.
 
 ### Dataset
 
@@ -52,7 +45,6 @@ In the dataset file, there are six columns:
 * **Prompt Length**: the number of words/tokens in the prompt.
 * **Task Type**: based on a key with 7 different task types labeled 0-6; includes task categories such as small talk, coding, creativity, etc.
 * **Complexity**: a subjective annotation by the author to sort prompts by complexity of the task.
-* **Output Length**: model dependent, appended during experiment based on which LLM is being tested at that time.
 * **Origin**: the origin of the prompt; either ChatGPT or the name of the HuggingFace dataset.
 
 #### Example of Data Output:
@@ -63,6 +55,10 @@ In the dataset file, there are six columns:
 | Who was known for playing the trombone for The Jazzmen at the time of Kenny Ball's death? | 17 | 1 | 1 |0 | x | SimpleQA |
 | Where should I go on vacation? | 6 | 0 | 1 |0 | x | ChatGPT |
 
+### Experiment
+
+Not Fully Implemented Yet
+
 ### Authors
 
 * **Lead Author:** Abigail Pitcairn [abigail.pitcairn@maine.edu]
@@ -71,4 +67,5 @@ In the dataset file, there are six columns:
 
 * **March 4, 2026:** Initial Release of Dataset Generator
 * **March 10, 2026:** Added Data Visualization Scripts for Graph Generation
+* **March 23, 2025:** Data Visualization Update, Initial Experiment Script Upload
 * **May 5, 2026:** Projected Final Release Date
